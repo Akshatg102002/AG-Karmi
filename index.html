@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Karmi Beauty Salon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'brand-primary': '#D97706', // Amber 600
+              'brand-secondary': '#FDE68A', // Amber 200
+              'brand-text': '#44403C', // Stone 700
+              'brand-light': '#FEF3C7', // Amber 100
+              'brand-dark': '#78350F', // Amber 900
+            }
+          }
+        }
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.4",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "firebase/app": "https://aistudiocdn.com/firebase@^12.4.0/app",
+    "firebase/auth": "https://aistudiocdn.com/firebase@^12.4.0/auth",
+    "firebase/firestore": "https://aistudiocdn.com/firebase@^12.4.0/firestore",
+    "firebase/": "https://aistudiocdn.com/firebase@^12.4.0/",
+    "@firebase/auth": "https://aistudiocdn.com/@firebase/auth@^1.11.1"
+  }
+}
+</script>
+</head>
+  <body class="bg-brand-light">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
