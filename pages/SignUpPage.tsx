@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 // FIX: Updated react-router-dom imports for v6+ compatibility.
@@ -11,7 +12,7 @@ const SignUpPage: React.FC = () => {
         phone: '',
         password: ''
     });
-    const [error, setError] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(false);
     const { signup, login } = useAuth();
     // FIX: Replaced useHistory with useNavigate for v6+.
@@ -27,11 +28,18 @@ const SignUpPage: React.FC = () => {
         setLoading(true);
 
         try {
-            await signup(formData);
+            const role = isAdmin ? 'admin' : 'customer';
+            await signup(formData, role);
+            
             // Log the user in automatically after signup
             await login(formData.email, formData.password);
-            // FIX: Use navigate for navigation.
-            navigate('/profile', { replace: true });
+            
+            // Redirect based on role
+            if (role === 'admin') {
+                navigate('/admin', { replace: true });
+            } else {
+                navigate('/profile', { replace: true });
+            }
         } catch (err: any) {
             let errorMessage = 'Could not sign up. Please try again.';
             if (err.message && err.message.includes('phone number')) {
@@ -84,6 +92,20 @@ const SignUpPage: React.FC = () => {
                         </div>
                     </div>
 
+                    <div className="flex items-center">
+                        <input
+                            id="isAdmin"
+                            name="isAdmin"
+                            type="checkbox"
+                            className="h-4 w-4 text-brand-primary focus:ring-brand-primary border-gray-300 rounded"
+                            checked={isAdmin}
+                            onChange={(e) => setIsAdmin(e.target.checked)}
+                        />
+                        <label htmlFor="isAdmin" className="ml-2 block text-sm text-gray-900">
+                            Register as Administrator
+                        </label>
+                    </div>
+
                     <div>
                         <button type="submit" disabled={loading} className="group relative flex w-full justify-center rounded-md border border-transparent bg-brand-primary py-2 px-4 text-sm font-medium text-white hover:bg-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 disabled:bg-gray-400">
                             {loading ? 'Creating account...' : 'Sign up'}
@@ -100,7 +122,7 @@ const SignUpPage: React.FC = () => {
                 </div>
                  <div className="text-sm text-center pt-4 border-t">
                     <p className="text-gray-600">
-                        Are you an Admin or Employee?{' '}
+                        Are you an Employee?{' '}
                         <Link to="/login" className="font-medium text-brand-primary hover:text-brand-dark">
                             Login here
                         </Link>
